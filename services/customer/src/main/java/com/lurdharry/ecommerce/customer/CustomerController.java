@@ -2,7 +2,6 @@ package com.lurdharry.ecommerce.customer;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +34,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.findAllCustomer());
     }
 
-    @GetMapping("/exists/${customer-id}")
+    @GetMapping("/exists/{customer-id}")
     public ResponseEntity<Boolean> existsById(
             @PathVariable("customer-id") String customerId
     ){
