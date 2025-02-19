@@ -16,13 +16,13 @@ public class Category {
 
     @Id
     @GeneratedValue
-    private String id;
+    private Integer id;
 
     private String name;
 
     private String description;
 
-    @OneToOne(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Product> products;
 
 }
