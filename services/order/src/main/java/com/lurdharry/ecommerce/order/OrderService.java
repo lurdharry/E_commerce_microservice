@@ -3,7 +3,10 @@ package com.lurdharry.ecommerce.order;
 
 import com.lurdharry.ecommerce.customer.CustomerClient;
 import com.lurdharry.ecommerce.exception.BusinessException;
+import com.lurdharry.ecommerce.orderline.OrderLineRequest;
+import com.lurdharry.ecommerce.orderline.OrderLineService;
 import com.lurdharry.ecommerce.product.ProductClient;
+import com.lurdharry.ecommerce.product.PurchaseRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ public class OrderService {
     private final CustomerClient customerClient;
     private final ProductClient productClient;
     private final OrderMapper mapper;
+    private final OrderLineService orderLineService;
 
     public Integer createOrder(@Valid OrderRequest orderRequest) {
 
@@ -27,12 +31,22 @@ public class OrderService {
         productClient.purchaseProducts(orderRequest.products());
 
         //persist order
-        var order = orderRepository.save(mapper::toOrder(orderRequest));
-
+        var order = orderRepository.save(mapper.toOrder(orderRequest));
 
         //persist order lines
 
-        // start payment process
+        for (PurchaseRequest purchaseRequest: orderRequest.products()){
+            orderLineService.saveOrderLine(
+                    new OrderLineRequest(
+                            null,
+                            order.getId(),
+                            purchaseRequest.productId(),
+                            purchaseRequest.quantity()
+                    )
+            );
+        }
+
+        //todo start payment process
 
         // send order notification --> notification -ms
         return  null;
