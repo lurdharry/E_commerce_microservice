@@ -15,6 +15,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerClient customerClient;
     private final ProductClient productClient;
+    private final OrderMapper mapper;
 
     public Integer createOrder(@Valid OrderRequest orderRequest) {
 
@@ -25,9 +26,9 @@ public class OrderService {
         // purchase the product
         productClient.purchaseProducts(orderRequest.products());
 
-        var order =
-
         //persist order
+        var order = orderRepository.save(mapper::toOrder(orderRequest));
+
 
         //persist order lines
 
