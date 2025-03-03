@@ -1,6 +1,6 @@
 package com.lurdharry.ecommerce.handler;
 
-import com.lurdharry.ecommerce.exception.ProductPurchaseException;
+import com.lurdharry.ecommerce.exception.BusinessException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -15,11 +15,11 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ProductPurchaseException.class)
-    public ResponseEntity<String> handle(ProductPurchaseException exp) {
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> handle(BusinessException exp) {
         return ResponseEntity
                 .status(BAD_REQUEST)
-                .body(exp.getMessage());
+                .body(exp.getMsg());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
