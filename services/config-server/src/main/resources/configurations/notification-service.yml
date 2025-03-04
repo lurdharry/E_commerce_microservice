@@ -17,7 +17,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: '*'
-        spring.json.type.mapping: OrderConfirmation:com.lurdharry.ecommerce.kafka.OrderConfirmation,paymentConfirmation:com.lurdharry.ecommerce.notification.PaymentNotificationRequest
+        spring.json.type.mapping: OrderConfirmation:com.lurdharry.ecommerce.kafka.order.OrderConfirmation,paymentConfirmation:com.lurdharry.ecommerce.kafka.payment.PaymentConfirmation
 
   mail:
     host: localhost
