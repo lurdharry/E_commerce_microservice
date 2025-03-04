@@ -1,7 +1,7 @@
 package com.lurdharry.ecommerce.notification;
 
-import com.lurdharry.ecommerce.kafka.order.OrderConformation;
-import com.lurdharry.ecommerce.kafka.payment.PaymentConformation;
+import com.lurdharry.ecommerce.kafka.order.OrderConfirmation;
+import com.lurdharry.ecommerce.kafka.payment.PaymentConfirmation;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,7 +23,7 @@ public class Notification {
 
     private LocalDateTime notificationDate;
 
-    private OrderConformation orderConformation;
+    private OrderConfirmation orderConfirmation;
 
-    private PaymentConformation paymentConformation;
+    private PaymentConfirmation paymentConfirmation;
 }

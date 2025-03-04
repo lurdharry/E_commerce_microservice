@@ -1,8 +1,8 @@
 package com.lurdharry.ecommerce.kafka;
 
 import com.lurdharry.ecommerce.email.EmailService;
-import com.lurdharry.ecommerce.kafka.order.OrderConformation;
-import com.lurdharry.ecommerce.kafka.payment.PaymentConformation;
+import com.lurdharry.ecommerce.kafka.order.OrderConfirmation;
+import com.lurdharry.ecommerce.kafka.payment.PaymentConfirmation;
 import com.lurdharry.ecommerce.notification.Notification;
 import com.lurdharry.ecommerce.notification.NotificationRepository;
 import jakarta.mail.MessagingException;
@@ -28,48 +28,48 @@ public class NotificationConsumer {
 
 
     @KafkaListener(topics = "payment-topic")
-    public void consumePaymentSuccessNotification(PaymentConformation paymentConformation) throws MessagingException {
-        log.info(format("Consuming the message from payment-topic Topic:: %s", paymentConformation));
+    public void consumePaymentSuccessNotification(PaymentConfirmation paymentConfirmation) throws MessagingException {
+        log.info(format("Consuming the message from payment-topic Topic:: %s", paymentConfirmation));
 
         repository.save(
                 Notification.builder()
                         .type(PAYMENT_CONFORMATION)
                         .notificationDate(LocalDateTime.now())
-                        .paymentConformation(paymentConformation)
+                        .paymentConfirmation(paymentConfirmation)
                         .build()
         );
 
         // send email
-        var customerName = paymentConformation.customerFirstname() + " " + paymentConformation.customerLastname();
+        var customerName = paymentConfirmation.customerFirstname() + " " + paymentConfirmation.customerLastname();
         emailService.sendPaymentSuccessEmail(
-                paymentConformation.customerEmail(), 
+                paymentConfirmation.customerEmail(),
                 customerName,
-                paymentConformation.amount(),
-                paymentConformation.oderReference()
+                paymentConfirmation.amount(),
+                paymentConfirmation.oderReference()
         );
     }
 
 
     @KafkaListener(topics = "order-topic")
-    public void consumePaymentSuccessNotification(OrderConformation orderConformation) throws MessagingException {
-        log.info(format("Consuming the message from order-topic Topic:: %s", orderConformation));
+    public void consumePaymentSuccessNotification(OrderConfirmation orderConfirmation) throws MessagingException {
+        log.info(format("Consuming the message from order-topic Topic:: %s", orderConfirmation));
 
         repository.save(
                 Notification.builder()
                         .type(ORDER_CONFIRMATION)
                         .notificationDate(LocalDateTime.now())
-                        .orderConformation( orderConformation)
+                        .orderConfirmation(orderConfirmation)
                         .build()
         );
 
         // send email
-        var customerName = orderConformation.customer().firstname() + " " + orderConformation.customer().lastname();
+        var customerName = orderConfirmation.customer().firstname() + " " + orderConfirmation.customer().lastname();
         emailService.sendOrderConfirmationEmail(
-                orderConformation.customer().email(),
+                orderConfirmation.customer().email(),
                 customerName,
-                orderConformation.totalAmount(),
-                orderConformation.orderReference(),
-                orderConformation.products()
+                orderConfirmation.totalAmount(),
+                orderConfirmation.orderReference(),
+                orderConfirmation.products()
         );
     }
 
