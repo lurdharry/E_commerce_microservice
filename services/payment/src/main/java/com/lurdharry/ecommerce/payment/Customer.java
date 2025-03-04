@@ -9,7 +9,7 @@ public record Customer(
         String id,
 
         @NotNull(message = "Firstname is required")
-        String firstName,
+        String firstname,
 
         @NotNull(message = "Lastname is required")
         String lastname,
