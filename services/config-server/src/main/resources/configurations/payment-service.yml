@@ -16,3 +16,5 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.JsonSerializer
       properties:
         spring.json.type.mapping: paymentConfirmation:com.lurdharry.ecommerce.notification.PaymentNotificationRequest
+server:
+  port: 8060

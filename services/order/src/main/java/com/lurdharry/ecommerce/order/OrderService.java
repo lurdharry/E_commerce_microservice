@@ -7,6 +7,8 @@ import com.lurdharry.ecommerce.kafta.OrderConfirmation;
 import com.lurdharry.ecommerce.kafta.OrderProducer;
 import com.lurdharry.ecommerce.orderline.OrderLineRequest;
 import com.lurdharry.ecommerce.orderline.OrderLineService;
+import com.lurdharry.ecommerce.payment.PaymentClient;
+import com.lurdharry.ecommerce.payment.PaymentRequest;
 import com.lurdharry.ecommerce.product.ProductClient;
 import com.lurdharry.ecommerce.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +29,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(@Valid OrderRequest orderRequest) {
 
@@ -53,7 +56,15 @@ public class OrderService {
             );
         }
 
-        //todo start payment process
+        // start payment process
+        var paymentRequest = new PaymentRequest(
+                orderRequest.amount(),
+                orderRequest.paymentMethod(),
+                orderRequest.id(),
+                orderRequest.reference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         // send order notification --> notification -ms
 
