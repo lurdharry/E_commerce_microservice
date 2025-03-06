@@ -20,8 +20,8 @@ public record OrderRequest(
         PaymentMethod paymentMethod,
 
         @NotNull(message = "Customer should be precised")
-        @NotEmpty(message = "Payment method should be precised")
-        @NotBlank(message = "Payment method should be precised")
+        @NotEmpty(message = "Customer should be precised")
+        @NotBlank(message = "Customer should be precised")
         String customerId,
 
         @NotEmpty(message = "You should at least purchase one product")

@@ -3,8 +3,8 @@ package com.lurdharry.ecommerce.order;
 
 import com.lurdharry.ecommerce.customer.CustomerClient;
 import com.lurdharry.ecommerce.exception.BusinessException;
-import com.lurdharry.ecommerce.kafta.OrderConfirmation;
-import com.lurdharry.ecommerce.kafta.OrderProducer;
+import com.lurdharry.ecommerce.kafka.OrderConfirmation;
+import com.lurdharry.ecommerce.kafka.OrderProducer;
 import com.lurdharry.ecommerce.orderline.OrderLineRequest;
 import com.lurdharry.ecommerce.orderline.OrderLineService;
 import com.lurdharry.ecommerce.payment.PaymentClient;

@@ -1,4 +1,4 @@
-package com.lurdharry.ecommerce.kafta;
+package com.lurdharry.ecommerce.kafka;
 
 
 import lombok.RequiredArgsConstructor;
