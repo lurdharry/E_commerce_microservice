@@ -54,8 +54,8 @@
         Order Confirmation
     </div>
     <div class="content">
-        <p>Hello <strong>{{customerName}}</strong>,</p>
-        <p>Your order <strong>#{{orderReference}}</strong> has been placed successfully.</p>
+        <p>Hello <strong th:text="${customerName}"></strong>,</p>
+        <p>Your order <strong>#<span th:text="${orderReference}"></span></strong> has been placed successfully.</p>
 
         <h3>Order Details:</h3>
         <table class="order-table">
@@ -67,17 +67,15 @@
             </tr>
             </thead>
             <tbody>
-            {{#products}}
-            <tr>
-                <td>{{name}}</td>
-                <td>{{quantity}}</td>
-                <td>${{price}}</td>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.quantity}"></td>
+                <td>$<span th:text="${product.price}"></span></td>
             </tr>
-            {{/products}}
             </tbody>
         </table>
 
-        <p><strong>Total Amount:</strong> ${{totalAmount}}</p>
+        <p><strong>Total Amount:</strong> $<span th:text="${totalAmount}"></span></p>
         <p>Thank you for shopping with us!</p>
     </div>
     <div class="footer">

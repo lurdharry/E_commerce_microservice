@@ -41,9 +41,9 @@
         Payment Confirmation
     </div>
     <div class="content">
-        <p>Hello <strong>{{customerName}}</strong>,</p>
-        <p>Your payment of <strong>${{amount}}</strong> for Order ID <strong>{{orderId}}</strong> has been successfully processed.</p>
-        <p>Order reference: <strong>{{orderReference}}</strong></p>
+        <p>Hello <strong th:text="${customerName}"></strong>,</p>
+        <p>Your payment of <strong>$<span th:text="${amount}"></span></strong> for Order ID <strong><span th:text="${orderId}"></span></strong> has been successfully processed.</p>
+        <p>Order reference: <strong th:text="${orderReference}"></strong></p>
         <p>Thank you for shopping with us!</p>
     </div>
     <div class="footer">
