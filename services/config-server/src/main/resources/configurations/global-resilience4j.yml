@@ -1,0 +1,35 @@
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        failureRateThreshold: 50          # Open circuit if 50% of requests fail
+        waitDurationInOpenState: 10s      # Wait 10 seconds before trying again
+        permittedNumberOfCallsInHalfOpenState: 2
+        minimumNumberOfCalls: 5
+        slidingWindowSize: 10
+    instances:
+      customerService:
+        baseConfig: default
+      paymentService:
+        baseConfig: default
+
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 2s
+    instances:
+      customerService:
+        baseConfig: default
+      paymentService:
+        maxAttempts: 2
+        waitDuration: 5s
+
+  ratelimiter:
+    configs:
+      default:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+    instances:
+      orderService:
+        baseConfig: default

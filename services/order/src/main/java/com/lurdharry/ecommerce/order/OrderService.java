@@ -11,6 +11,7 @@ import com.lurdharry.ecommerce.payment.PaymentClient;
 import com.lurdharry.ecommerce.payment.PaymentRequest;
 import com.lurdharry.ecommerce.product.ProductClient;
 import com.lurdharry.ecommerce.product.PurchaseRequest;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,11 @@ public class OrderService {
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
     private final PaymentClient paymentClient;
+
+
+    public String fallbackMethod(Exception e) {
+        return "Fallback response due to: " + e.getMessage();
+    }
 
     public Integer createOrder(@Valid OrderRequest orderRequest) {
 
@@ -80,11 +86,13 @@ public class OrderService {
         return  order.getId();
     }
 
+    @CircuitBreaker(name = "order-service", fallbackMethod = "fallbackMethod")
     public List<OrderResponse> findAll() {
-        return orderRepository.findAll()
-                .stream()
-                .map(mapper::fromOrder)
-                .collect(Collectors.toList());
+        throw new RuntimeException("Simulated failure");
+//        return orderRepository.findAll()
+//                .stream()
+//                .map(mapper::fromOrder)
+//                .collect(Collectors.toList());
     }
 
     public OrderResponse findById(Integer orderId) {

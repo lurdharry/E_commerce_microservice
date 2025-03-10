@@ -4,3 +4,11 @@ spring:
   application:
     name: product-service
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    enable:
+      resilience4j: true
